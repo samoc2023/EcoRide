@@ -140,7 +140,11 @@
     <div class="navbar-logo">Ecoride Plus</div>
     <ul>
       <li><a href="Index.php">Home</a></li>
+
       <li><a href="Services.php">Services</a></li>
+
+      <li><a href="#">Services</a></li>
+ 453bbbfeb9cc26c149ef698d4748f545c041f93c
       <li><a href="rentals.php">Rentals</a></li>
       <li><a href="adminpage.php">Admin</a></li>
     </ul>
