@@ -1,4 +1,5 @@
 <?php
+global $sql, $host, $username, $password, $options;
 /**
  * Open a connection via PDO to create a new database and table with structure. */
 require "config.php";
@@ -13,6 +14,3 @@ $options);
 }
 
 
- array(
- PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
- );

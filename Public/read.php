@@ -1,4 +1,4 @@
-<?php
+<?php global $sql, $connection;
 /**
  * Function to query information based on
  * a parameter: in this case, id.
