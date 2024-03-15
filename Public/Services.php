@@ -164,9 +164,6 @@
         <p>Explore the various eco-friendly services we provide.</p>
         <ul>
             <li>Eco-friendly car rentals</li>
-            <li>Bicycle sharing</li>
-            <li>Electric scooter rentals</li>
-            <li>Public transportation integration</li>
             <li>Green energy vehicle charging stations</li>
         </ul>
     </section>
