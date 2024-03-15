@@ -1,118 +1,124 @@
 <?php
-require "header.php"; // Include header file
-require "../src/DBconnect.php"; // Include database connection file
+require "header.php";
+require "Reservation.php";
 
-// Check if the form is submitted
 if (isset($_POST['submit'])) {
+    require "../common.php";
     try {
-        // Retrieve form data and sanitize
-        $name = htmlspecialchars($_POST['name']);
-        $email = htmlspecialchars($_POST['email']);
-        $phone = htmlspecialchars($_POST['phone']);
-        $date = htmlspecialchars($_POST['date']);
-        $time = htmlspecialchars($_POST['time']);
-        $message = htmlspecialchars($_POST['message']);
+        require_once '../src/DBconnect.php';
+        $new_reservation = array(
+            "reservation" => escape($_POST['ReservationNumber']),
+            "userID" => escape($_POST['UserID']),
+            "carID" => escape($_POST['CarID']),
+            "date" => escape($_POST['DateAndTime']),
+            "total" => escape($_POST['TotalAmount']),
+            "status" => escape($_POST['IdentityVerificationStatus']),
+            "payment" => escape($_POST['PaymentStatus']),
+        );
 
-        // SQL query to insert reservation into database
-        $sql = "INSERT INTO reservations (name, email, phone, reservation_date, reservation_time, message) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = sprintf(
+            "INSERT INTO %s (%s) values (%s)",
+            "reservation",
+            implode(", ", array_keys($new_reservation)),
+            ":" . implode(", :", array_keys($new_reservation))
+        );
 
-        // Prepare and execute the query
-        $stmt = $connection->prepare($sql);
-        $stmt->execute([$name, $email, $phone, $date, $time, $message]);
-
-        // Display success message
-        echo "<p>Reservation successfully added.</p>";
+        $statement = $connection->prepare($sql);
+        $statement->execute($new_reservation);
     } catch(PDOException $error) {
-        // Display error message if query fails
-        echo "Error: " . $error->getMessage();
+        echo $sql . "<br>" . $error->getMessage();
     }
+}
+
+if (isset($_POST['submit']) && $statement) {
+    echo "Reservation successfully added.";
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Reservation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #E6EDEA;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #E6EDEA;
+    }
 
-        form {
-            background-color: #C5E4CB;
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 8px;
-        }
+    form {
+        background: #C5E4CB;
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+    }
 
-        label {
-            display: block;
-            margin: 15px 0 5px;
-        }
+    label {
+        display: block;
+        margin: 15px 0 5px;
+    }
 
-        input[type=text],
-        input[type=email],
-        input[type=tel],
-        input[type=date],
-        textarea,
-        input[type=submit] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            border: 1px solid #a9c9a4;
-            box-sizing: border-box;
-        }
+    input[type=text],
+    input[type=submit],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        border: 1px solid #a9c9a4;
+    }
 
-        textarea {
-            resize: vertical;
-        }
+    textarea {
+        height: 100px;
+    }
 
-        input[type=submit] {
-            background-color: #A9C9A4;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    input[type=submit] {
+        background-color: #A9C9A4;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 
-        input[type=submit]:hover {
-            background-color: #97b498;
-        }
-    </style>
-</head>
-<body>
+    input[type=submit]:hover {
+        background-color: #97b498;
+    }
 
-<h2>Add Reservation</h2>
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #3B5249;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #2F3E34;
+    }
+</style>
+
+<h2>Make a Reservation</h2>
 <form method="post">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" required>
+    <label for="reservation"> reservation</label>
+    <input type="number" name="reservation" id="reservation">
 
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+    <label for="userID">userID</label>
+    <input type="number" name="userID" id="userID">
 
-    <label for="phone">Phone</label>
-    <input type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Format: 123-456-7890" required>
+    <label for="carID">carID</label>
+    <input type="number" name="carID" id="carID">
 
     <label for="date">Date</label>
-    <input type="date" name="date" id="date" required>
+    <input type="date" name="date" id="date">
 
-    <label for="time">Time</label>
-    <input type="time" name="time" id="time" required>
+    <label for="total">Total</label>
+    <input type="text" name="total" id="total">
 
-    <label for="message">Message</label>
-    <textarea name="message" id="message" rows="4" required></textarea>
+    <label for="payment">Payment Status</label>
+    <input type="text" name="payment" id="payment">
+
+
+
+
 
     <input type="submit" name="submit" value="Submit">
 </form>
 
-<?php include "footer.php"; ?>
+<a href="index.php">Back to Home</a>
 
-</body>
-</html>
+<?php include "footer.php"; ?>
