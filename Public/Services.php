@@ -123,15 +123,69 @@
             padding: 10px 0;
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
+        /* Reservation form styles */
+        .reservation-form {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
 
-            .main-content {
-                grid-template-columns: 1fr;
-            }
+        .reservation-form label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary-text-color);
+        }
+
+        .reservation-form input[type="text"],
+        .reservation-form input[type="email"],
+        .reservation-form input[type="date"],
+        .reservation-form textarea,
+        .reservation-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .reservation-form textarea {
+            height: 100px;
+        }
+
+        .reservation-form input[type="submit"] {
+            background-color: var(--button-bg-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .reservation-form input[type="submit"]:hover {
+            background-color: #8DAE8A; /* Green shade */
+        }
+
+        /* Reservation button styles */
+        .reservation-button {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .reservation-button a {
+            display: inline-block;
+            background-color: var(--button-bg-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .reservation-button a:hover {
+            background-color: #8DAE8A; /* Green shade */
         }
     </style>
 </head>
@@ -167,6 +221,10 @@
             <li>Green energy vehicle charging stations</li>
         </ul>
     </section>
+</div>
+
+<div class="reservation-button">
+    <a href="addReservation.php">Make a Reservation</a>
 </div>
 
 <footer>
